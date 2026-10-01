@@ -1,13 +1,13 @@
 <script setup lang="ts">
 /**
- * Produktbild im 4:3-Rahmen. Ohne Bild füllt das Emoji der Nische den Rahmen, auf einer Lochwand
- * aus Punkten, damit auch Gadgets ohne Foto bewusst gestaltet aussehen.
+ * Product image in a 4:3 frame. Without an image, the emoji of the niche fills the frame on a pegboard
+ * of dots, so that gadgets without a photo still look deliberately designed.
  */
 defineProps<{
   imageUrl: string | null;
   emoji: string;
   name: string;
-  /** Bild sofort laden, z. B. weil es beim Öffnen der Seite sichtbar ist. */
+  /** Load the image right away, e.g. because it is visible when the page opens. */
   priority?: boolean;
 }>();
 </script>

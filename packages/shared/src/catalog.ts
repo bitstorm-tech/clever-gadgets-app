@@ -1,22 +1,22 @@
 import { z } from "zod";
 
-/** URL-tauglicher Name, wie er in Seitenadressen vorkommt, z. B. `katzen` oder `trinkbrunnen-mit-filter`. */
+/** URL-friendly name as it appears in page URLs, e.g. `cats` or `water-fountain-with-filter`. */
 export const SlugSchema = z
   .string()
   .min(1)
   .max(80)
   .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/);
 
-/** Nur http(s): Diese Werte landen in `href`, wo z. B. `javascript:` gefährlich wäre. */
+/** http(s) only: these values end up in `href`, where e.g. `javascript:` would be dangerous. */
 export const HttpUrlSchema = z.url({ protocol: /^https?$/ });
 
-/** Eine absolute http(s)-URL oder ein Pfad auf dieser Seite wie `/images/gadgets/foo.jpg`. */
+/** An absolute http(s) URL or a path on this site like `/images/gadgets/foo.jpg`. */
 export const ImageUrlSchema = z.union([HttpUrlSchema, z.string().regex(/^\/(?!\/)\S*$/)]);
 
-/** Hex-Farbe wie `#b8a1ff`. */
+/** Hex color like `#b8a1ff`. */
 export const AccentColorSchema = z.string().regex(/^#[0-9a-fA-F]{6}$/);
 
-/** Eine Nische (z. B. Katzen) in der Übersicht auf der Startseite. */
+/** A niche (e.g. cats) in the overview on the home page. */
 export const NicheSummarySchema = z.object({
   slug: SlugSchema,
   name: z.string(),
@@ -27,7 +27,7 @@ export const NicheSummarySchema = z.object({
 });
 export type NicheSummary = z.infer<typeof NicheSummarySchema>;
 
-/** `GET /api/v1/niches`: veröffentlichte Nischen in Anzeigereihenfolge. */
+/** `GET /api/v1/niches`: published niches in display order. */
 export const NichesResponseSchema = z.object({
   niches: z.array(NicheSummarySchema),
 });
@@ -38,7 +38,7 @@ export const NicheSchema = NicheSummarySchema.omit({ gadgetCount: true }).extend
 });
 export type Niche = z.infer<typeof NicheSchema>;
 
-/** Ein Gadget als Eintrag in der Liste einer Nische. */
+/** A gadget as an entry in the list of a niche. */
 export const GadgetSummarySchema = z.object({
   slug: SlugSchema,
   name: z.string(),
@@ -47,7 +47,7 @@ export const GadgetSummarySchema = z.object({
 });
 export type GadgetSummary = z.infer<typeof GadgetSummarySchema>;
 
-/** `GET /api/v1/niches/:nicheSlug`: die Nische mit ihren veröffentlichten Gadgets in Anzeigereihenfolge. */
+/** `GET /api/v1/niches/:nicheSlug`: the niche with its published gadgets in display order. */
 export const NicheDetailResponseSchema = z.object({
   niche: NicheSchema,
   gadgets: z.array(GadgetSummarySchema),
@@ -55,13 +55,13 @@ export const NicheDetailResponseSchema = z.object({
 export type NicheDetailResponse = z.infer<typeof NicheDetailResponseSchema>;
 
 export const GadgetSchema = GadgetSummarySchema.extend({
-  /** Fließtext; Absätze sind durch eine Leerzeile getrennt. */
+  /** Running text; paragraphs are separated by a blank line. */
   description: z.string(),
-  /** Kurze Stichpunkte, warum das Gadget clever ist. */
+  /** Short bullet points on why the gadget is clever. */
   highlights: z.array(z.string()),
-  /** Name des Anbieters, z. B. für den Button "Zum Angebot bei …". */
+  /** Name of the merchant, e.g. for the button "Get it at …". */
   merchantName: z.string(),
-  /** Der Affiliate-Link zur Seite des Anbieters. */
+  /** The affiliate link to the merchant's page. */
   affiliateUrl: HttpUrlSchema,
   niche: NicheSchema.pick({ slug: true, name: true, emoji: true, accentColor: true }),
 });

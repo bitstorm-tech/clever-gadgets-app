@@ -16,7 +16,7 @@ const logger = createLogger(config);
 const database = connectDatabase(config.databaseUrl);
 
 try {
-  // Das Seeden funktioniert auch auf einer frischen Datenbank.
+  // Seeding also works on a fresh database.
   await migrate(database.sql, logger);
   await seedCatalog(database.db, SAMPLE_CATALOG);
   logger.info(

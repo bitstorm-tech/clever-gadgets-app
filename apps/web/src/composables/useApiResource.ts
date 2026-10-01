@@ -6,13 +6,13 @@ export type ResourceStatus = "loading" | "ready" | "not-found" | "error";
 export interface ApiResource<T> {
   data: Readonly<ShallowRef<T | null>>;
   status: Readonly<ShallowRef<ResourceStatus>>;
-  /** Lädt erneut, z. B. nach einem Fehler. */
+  /** Loads again, e.g. after an error. */
   reload: () => void;
 }
 
 /**
- * Lädt Daten beim Einbinden und neu, sobald sich ein reaktiver Wert ändert, den `load` direkt liest
- * (z. B. ein Route-Parameter). Antworten veralteter Anfragen werden verworfen.
+ * Loads data on mount and again whenever a reactive value that `load` reads directly changes
+ * (e.g. a route parameter). Responses to outdated requests are discarded.
  */
 export function useApiResource<T>(load: () => Promise<T>): ApiResource<T> {
   const data = shallowRef<T | null>(null);
@@ -34,7 +34,7 @@ export function useApiResource<T>(load: () => Promise<T>): ApiResource<T> {
     }
   }
 
-  // `load` wird synchron im Effekt aufgerufen, daher verfolgt Vue dessen reaktive Zugriffe.
+  // `load` is called synchronously inside the effect, so Vue tracks its reactive reads.
   watchEffect(() => {
     void run();
   });

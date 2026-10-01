@@ -20,7 +20,7 @@ export function errorResponse(c: Context<AppEnv>, status: ContentfulStatusCode, 
 export const handleNotFound: NotFoundHandler<AppEnv> = (c) =>
   errorResponse(c, 404, ErrorCode.NOT_FOUND, "Route not found");
 
-/** AppErrors werden auf ihren Status abgebildet; alles andere wird geloggt und ohne Interna beantwortet. */
+/** AppErrors are mapped to their status; anything else is logged and answered without internals. */
 export const handleError: ErrorHandler<AppEnv> = (error, c) => {
   if (error instanceof AppError) {
     const status = STATUS_BY_CODE[error.code];

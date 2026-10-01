@@ -1,5 +1,5 @@
-/** "Noch keine Gadgets", "1 Gadget", "3 Gadgets" */
+/** "No gadgets yet", "1 gadget", "3 gadgets" */
 export function gadgetCountLabel(count: number): string {
-  if (count === 0) return "Noch keine Gadgets";
-  return count === 1 ? "1 Gadget" : `${count} Gadgets`;
+  if (count === 0) return "No gadgets yet";
+  return count === 1 ? "1 gadget" : `${count} gadgets`;
 }

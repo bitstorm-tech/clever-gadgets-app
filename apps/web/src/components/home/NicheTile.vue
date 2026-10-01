@@ -48,7 +48,7 @@ const tileStyle = computed(() => ({ "--niche": props.niche.accentColor }));
   transform: rotate(9deg);
 }
 
-/* Steht die Kachel allein oder zu zweit, ist sie ein breites Banner: Das Emoji rückt in die Mitte der Fläche. */
+/* A tile that stands alone or with just one other is a wide banner: the emoji moves to the vertical middle. */
 @container niche-slot (min-width: 40rem) {
   .niche-tile {
     min-height: 18rem;

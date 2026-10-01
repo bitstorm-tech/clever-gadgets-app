@@ -3,7 +3,7 @@ import { sql } from "kysely";
 import type { Db } from "../database/database";
 import { AppError } from "../errors/app-error";
 
-/** Veröffentlichte Nischen in Anzeigereihenfolge, jeweils mit der Zahl ihrer veröffentlichten Gadgets. */
+/** Published niches in display order, each with the number of its published gadgets. */
 export async function listNiches(db: Db): Promise<NichesResponse> {
   const rows = await db
     .selectFrom("niches as n")
@@ -25,11 +25,11 @@ export async function listNiches(db: Db): Promise<NichesResponse> {
     .orderBy("n.name")
     .execute();
 
-  // count(*) liefert nie NULL; Kysely typisiert Unterabfragen in der Select-Liste aber vorsichtshalber als nullable.
+  // count(*) never returns NULL; Kysely types subqueries in the select list as nullable to be safe.
   return { niches: rows.map((row) => ({ ...row, gadgetCount: row.gadgetCount ?? 0 })) };
 }
 
-/** Eine veröffentlichte Nische mit ihren veröffentlichten Gadgets in Anzeigereihenfolge. */
+/** One published niche with its published gadgets in display order. */
 export async function getNiche(db: Db, nicheSlug: string): Promise<NicheDetailResponse> {
   const niche = await db
     .selectFrom("niches")
@@ -61,7 +61,7 @@ export async function getNiche(db: Db, nicheSlug: string): Promise<NicheDetailRe
   };
 }
 
-/** Ein veröffentlichtes Gadget einer veröffentlichten Nische, mit Affiliate-Link. */
+/** One published gadget of a published niche, with its affiliate link. */
 export async function getGadget(db: Db, nicheSlug: string, gadgetSlug: string): Promise<GadgetResponse> {
   const row = await publishedGadget(db, nicheSlug, gadgetSlug)
     .select([
@@ -96,7 +96,7 @@ export async function getGadget(db: Db, nicheSlug: string, gadgetSlug: string): 
   };
 }
 
-/** Die ID eines veröffentlichten Gadgets in einer veröffentlichten Nische, sonst undefined. */
+/** The ID of a published gadget in a published niche, otherwise undefined. */
 export async function findPublishedGadgetId(
   db: Db,
   nicheSlug: string,
@@ -106,7 +106,7 @@ export async function findPublishedGadgetId(
   return row?.id;
 }
 
-/** Gemeinsame Abfrage: Gadget und Nische müssen beide veröffentlicht sein. */
+/** Shared query: the gadget and its niche must both be published. */
 function publishedGadget(db: Db, nicheSlug: string, gadgetSlug: string) {
   return db
     .selectFrom("gadgets as g")

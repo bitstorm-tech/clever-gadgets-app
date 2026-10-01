@@ -2,12 +2,12 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p class="footer-note">
-        Clever Gadgets zeigt ausgewählte Gadgets und verlinkt auf die Seiten der Anbieter. Wenn du über unsere Links
-        kaufst, erhalten wir unter Umständen eine Provision. Dein Preis bleibt gleich.
+        Clever Gadgets features hand-picked gadgets and links to the sellers' websites. If you buy through our links,
+        we may earn a commission at no extra cost to you.
       </p>
-      <nav class="footer-links" aria-label="Rechtliches">
-        <RouterLink to="/impressum" class="footer-link">Impressum</RouterLink>
-        <RouterLink to="/datenschutz" class="footer-link">Datenschutz</RouterLink>
+      <nav class="footer-links" aria-label="Legal">
+        <RouterLink to="/legal-notice" class="footer-link">Legal Notice</RouterLink>
+        <RouterLink to="/privacy-policy" class="footer-link">Privacy Policy</RouterLink>
       </nav>
     </div>
   </footer>

@@ -5,7 +5,7 @@ import { captureAttribution } from "./attribution";
 import { router } from "./router";
 import "./styles.css";
 
-// Muss vor dem ersten Rendern passieren: Danach kann die Router-Navigation die Adresse verändern.
+// Must happen before the first render: after that, router navigation may change the URL.
 captureAttribution(window.location.search);
 
 createApp(App).use(router).mount("#app");

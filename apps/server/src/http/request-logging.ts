@@ -2,7 +2,7 @@ import { createMiddleware } from "hono/factory";
 import type { Logger } from "pino";
 import type { AppEnv } from "./app-env";
 
-/** Bindet einen Logger pro Anfrage und loggt je abgeschlossener Anfrage eine Zeile. Braucht die requestId-Middleware. */
+/** Binds a logger per request and logs one line per completed request. Needs the requestId middleware. */
 export function requestLogging(logger: Logger) {
   return createMiddleware<AppEnv>(async (c, next) => {
     const requestLogger = logger.child({ requestId: c.get("requestId") });

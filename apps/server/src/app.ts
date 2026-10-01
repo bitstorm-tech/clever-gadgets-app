@@ -14,7 +14,7 @@ export interface AppDependencies {
   logger: Logger;
 }
 
-/** Baut die HTTP-Anwendung ohne Port zu binden, damit Tests `app.request()` direkt aufrufen können. */
+/** Builds the HTTP application without binding a port, so tests can call `app.request()` directly. */
 export function createApp({ db, logger }: AppDependencies) {
   const api = new Hono<AppEnv>()
     .route("/", healthRoutes(db))

@@ -2,7 +2,7 @@
 import ResourceBoundary from "../components/common/ResourceBoundary.vue";
 import { usePageMeta } from "../composables/usePageMeta";
 
-usePageMeta(() => ({ title: "Seite nicht gefunden" }));
+usePageMeta(() => ({ title: "Page not found" }));
 </script>
 
 <template>

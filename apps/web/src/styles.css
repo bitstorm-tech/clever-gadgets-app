@@ -5,7 +5,7 @@
   --line: #dfe1f0;
   --volt: #ffd23f;
   --focus: #4a35e8;
-  /* Akzentfarbe der aktuellen Nische. Die Seiten einer Nische überschreiben sie. */
+  /* Accent color of the current niche. The pages of a niche override it. */
   --niche: #b8a1ff;
 
   --font: "Bricolage Grotesque Variable", ui-rounded, system-ui, sans-serif;
@@ -33,7 +33,7 @@ body {
   font-size: 1.0625rem;
   line-height: 1.55;
   font-optical-sizing: auto;
-  /* Letzte Absicherung: Ein Wort, das nicht in die Zeile passt, wird umbrochen statt überzulaufen. */
+  /* Last safeguard: a word that does not fit on the line is wrapped instead of overflowing. */
   overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
 }
@@ -85,7 +85,7 @@ img {
   margin-inline: auto;
 }
 
-/* Nur für Screenreader sichtbar. */
+/* Visible to screen readers only. */
 .visually-hidden {
   position: absolute;
   width: 1px;

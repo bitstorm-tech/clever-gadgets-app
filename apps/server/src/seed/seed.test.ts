@@ -46,14 +46,14 @@ describe("seedCatalog", () => {
 
   test("is idempotent and restores edited sample data", async () => {
     await seedCatalog(database.db, SAMPLE_CATALOG);
-    await database.db.updateTable("gadgets").set({ name: "Geändert" }).execute();
+    await database.db.updateTable("gadgets").set({ name: "Changed" }).execute();
 
     await seedCatalog(database.db, SAMPLE_CATALOG);
 
     const gadgetCount = SAMPLE_CATALOG.reduce((sum, niche) => sum + niche.gadgets.length, 0);
     const rows = await database.db.selectFrom("gadgets").select("name").execute();
     expect(rows).toHaveLength(gadgetCount);
-    expect(rows.map((row) => row.name)).not.toContain("Geändert");
+    expect(rows.map((row) => row.name)).not.toContain("Changed");
     expect(await database.db.selectFrom("niches").select("id").execute()).toHaveLength(SAMPLE_CATALOG.length);
   });
 });

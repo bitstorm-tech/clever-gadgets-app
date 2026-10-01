@@ -2,7 +2,7 @@ import pino, { type Logger } from "pino";
 import pretty from "pino-pretty";
 import type { Config } from "../config/config";
 
-/** Strukturierte JSON-Logs auf stdout, oder lesbare einzeilige Ausgabe über pino-pretty für lokales Arbeiten. */
+/** Structured JSON logs on stdout, or readable single-line output via pino-pretty for local work. */
 export function createLogger(config: Pick<Config, "logLevel" | "logFormat" | "appEnv">): Logger {
   const options = {
     level: config.logLevel,
@@ -10,7 +10,7 @@ export function createLogger(config: Pick<Config, "logLevel" | "logFormat" | "ap
   };
   if (config.logFormat === "json") return pino(options);
 
-  // Als synchroner Stream statt als Worker-Thread-Transport, damit fatale Logs vor process.exit geschrieben sind.
+  // As a synchronous stream instead of a worker-thread transport, so fatal logs are written before process.exit.
   return pino(
     options,
     pretty({

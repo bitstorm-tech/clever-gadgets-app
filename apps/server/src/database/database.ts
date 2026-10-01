@@ -2,10 +2,10 @@ import { type ColumnType, type Generated, Kysely } from "kysely";
 import { PostgresJSDialect } from "kysely-postgres-js";
 import postgres from "postgres";
 
-/** Zeitstempel-Spalten mit Datenbank-Default: beim Einfügen optional, beim Lesen ein Date. */
+/** Timestamp columns with a database default: optional on insert, a Date when read. */
 type CreatedTimestamp = ColumnType<Date, Date | string | undefined, Date | string>;
 
-/** Spalten mit Datenbank-Default: beim Einfügen optional. */
+/** Columns with a database default: optional on insert. */
 type WithDefault<T> = ColumnType<T, T | undefined, T>;
 
 export interface NichesTable {
@@ -15,7 +15,7 @@ export interface NichesTable {
   tagline: string;
   description: string;
   emoji: string;
-  /** Hex-Farbe wie `#b8a1ff`, prägt die Seiten der Nische. */
+  /** Hex color like `#b8a1ff`, shapes the pages of the niche. */
   accent_color: string;
   sort_order: WithDefault<number>;
   is_published: WithDefault<boolean>;
@@ -49,7 +49,7 @@ export interface GadgetClicksTable {
   clicked_at: CreatedTimestamp;
 }
 
-/** Kysely-Tabellentypen. Müssen zu den SQL-Migrationen passen. */
+/** Kysely table types. Must match the SQL migrations. */
 export interface DatabaseSchema {
   niches: NichesTable;
   gadgets: GadgetsTable;
@@ -59,7 +59,7 @@ export interface DatabaseSchema {
 export type Db = Kysely<DatabaseSchema>;
 
 export interface DatabaseConnection {
-  /** Roher postgres.js-Client, wird vom Migrations-Runner genutzt. */
+  /** Raw postgres.js client, used by the migration runner. */
   sql: postgres.Sql;
   db: Db;
   close(): Promise<void>;
@@ -78,7 +78,7 @@ export function connectDatabase(databaseUrl: string): DatabaseConnection {
     db,
     async close() {
       await db.destroy();
-      // Kysely startet seinen Treiber erst bei Bedarf; wurde nur der rohe Client genutzt, lässt destroy() den Pool offen.
+      // Kysely only starts its driver on demand; if only the raw client was used, destroy() leaves the pool open.
       await sql.end();
     },
   };

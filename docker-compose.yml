@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: clevergadgets
       POSTGRES_DB: clevergadgets
     ports:
-      # Host-Port 5434, damit es nicht mit einem lokalen Postgres (5432) oder der Finifeed-DB (5433) kollidiert.
+      # Host port 5434, so it does not collide with a local Postgres (5432) or the Finifeed DB (5433).
       - "5434:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
