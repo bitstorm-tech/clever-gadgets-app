@@ -1,0 +1,6 @@
+<template>
+  <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+    <rect width="32" height="32" rx="9" fill="#ffd23f" />
+    <path d="M18.5 4 9 17h6l-2 11 10-14h-6l.5-10Z" fill="#1b1f3b" />
+  </svg>
+</template>
