@@ -4,7 +4,7 @@ import SiteHeader from "./components/layout/SiteHeader.vue";
 </script>
 
 <template>
-  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <a class="skip-link" href="#main">Skip to content</a>
   <SiteHeader />
   <main id="main" class="main">
     <RouterView />

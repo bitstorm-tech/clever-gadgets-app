@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-/** Fehlercodes für den Client. Details zu Ursachen bleiben in den Server-Logs. */
+/** Error codes for the client. Details about causes stay in the server logs. */
 export const ErrorCode = {
   NICHE_NOT_FOUND: "NICHE_NOT_FOUND",
   GADGET_NOT_FOUND: "GADGET_NOT_FOUND",

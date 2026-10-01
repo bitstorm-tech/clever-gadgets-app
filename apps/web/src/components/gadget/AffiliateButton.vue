@@ -2,14 +2,14 @@
 defineProps<{ href: string; merchantName: string }>();
 const emit = defineEmits<{ activate: [] }>();
 
-/** Die mittlere Maustaste öffnet den Link ebenfalls, löst aber kein `click` aus. */
+/** The middle mouse button also opens the link, but does not fire `click`. */
 function onAuxClick(event: MouseEvent) {
   if (event.button === 1) emit("activate");
 }
 </script>
 
 <template>
-  <!-- `sponsored` kennzeichnet den Link gegenüber Suchmaschinen als bezahlte Empfehlung. -->
+  <!-- `sponsored` marks the link to search engines as a paid recommendation. -->
   <a
     :href="href"
     class="affiliate-button"
@@ -18,13 +18,13 @@ function onAuxClick(event: MouseEvent) {
     @click="emit('activate')"
     @auxclick="onAuxClick"
   >
-    Zum Angebot bei {{ merchantName }}
-    <span class="visually-hidden">(öffnet in einem neuen Tab)</span>
+    Get it at {{ merchantName }}
+    <span class="visually-hidden">(opens in a new tab)</span>
   </a>
 </template>
 
 <style scoped>
-/* Der Knopf hat eine feste Unterkante und senkt sich beim Drücken: ein Gadget zum Antippen. */
+/* The button has a solid bottom edge and sinks when pressed: a gadget made for tapping. */
 .affiliate-button {
   display: flex;
   align-items: center;

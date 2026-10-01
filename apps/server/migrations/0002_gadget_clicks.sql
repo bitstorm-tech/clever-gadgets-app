@@ -1,6 +1,6 @@
--- Klicks auf den Affiliate-Link eines Gadgets, um zu sehen, was Besucher zum Anbieter bringt.
--- Bewusst ohne personenbezogene Daten: keine IP-Adresse, kein User-Agent, keine Kennung.
--- Gespeichert werden nur Gadget, Zeitpunkt und die Herkunft aus den UTM-Parametern.
+-- Clicks on a gadget's affiliate link, to see what sends visitors to the merchant.
+-- Deliberately free of personal data: no IP address, no user agent, no identifier.
+-- Only the gadget, the time, and the origin from the UTM parameters are stored.
 
 create table gadget_clicks (
   id uuid primary key default gen_random_uuid(),

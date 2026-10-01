@@ -1,8 +1,8 @@
 <template>
   <section class="intro container">
-    <h1 class="intro-title">Gadgets, auf die man erst mal kommen muss.</h1>
+    <h1 class="intro-title">Gadgets you'd never think of.</h1>
     <p class="intro-lead">
-      Ausgewählte Helfer für den Alltag. Zu jedem Gadget gibt es eine eigene Seite und den direkten Weg zum Anbieter.
+      Hand-picked everyday helpers. Every gadget has its own page and a direct link to the seller.
     </p>
   </section>
 </template>

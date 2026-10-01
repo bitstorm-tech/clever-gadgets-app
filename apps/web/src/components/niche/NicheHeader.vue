@@ -5,7 +5,7 @@ import Breadcrumbs from "../common/Breadcrumbs.vue";
 
 const props = defineProps<{ niche: Niche }>();
 
-const crumbs = computed(() => [{ label: "Start", to: "/" }, { label: props.niche.name }]);
+const crumbs = computed(() => [{ label: "Home", to: "/" }, { label: props.niche.name }]);
 </script>
 
 <template>

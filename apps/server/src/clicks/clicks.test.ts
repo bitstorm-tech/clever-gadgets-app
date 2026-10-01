@@ -36,10 +36,10 @@ describe("POST /api/v1/niches/:nicheSlug/gadgets/:gadgetSlug/clicks", () => {
     const niche = await insertNiche(database.db);
     const gadget = await insertGadget(database.db, niche.id);
 
-    const response = await postClick("/niches/katzen/gadgets/trinkbrunnen", {
+    const response = await postClick("/niches/cats/gadgets/water-fountain", {
       utmSource: "instagram",
       utmMedium: "social",
-      utmCampaign: "katzen-reel-1",
+      utmCampaign: "cats-reel-1",
     });
 
     expect(response.status).toBe(204);
@@ -50,7 +50,7 @@ describe("POST /api/v1/niches/:nicheSlug/gadgets/:gadgetSlug/clicks", () => {
       gadget_id: gadget.id,
       utm_source: "instagram",
       utm_medium: "social",
-      utm_campaign: "katzen-reel-1",
+      utm_campaign: "cats-reel-1",
     });
     expect(rows[0]?.clicked_at).toBeInstanceOf(Date);
   });
@@ -59,7 +59,7 @@ describe("POST /api/v1/niches/:nicheSlug/gadgets/:gadgetSlug/clicks", () => {
     const niche = await insertNiche(database.db);
     await insertGadget(database.db, niche.id);
 
-    const response = await postClick("/niches/katzen/gadgets/trinkbrunnen", {});
+    const response = await postClick("/niches/cats/gadgets/water-fountain", {});
 
     expect(response.status).toBe(204);
     expect(await clicks()).toMatchObject([{ utm_source: null, utm_medium: null, utm_campaign: null }]);
@@ -67,9 +67,9 @@ describe("POST /api/v1/niches/:nicheSlug/gadgets/:gadgetSlug/clicks", () => {
 
   test("returns 404 and stores nothing for gadgets that are not published", async () => {
     const niche = await insertNiche(database.db);
-    await insertGadget(database.db, niche.id, { slug: "entwurf", is_published: false });
+    await insertGadget(database.db, niche.id, { slug: "draft", is_published: false });
 
-    for (const path of ["/niches/katzen/gadgets/gibt-es-nicht", "/niches/katzen/gadgets/entwurf", "/niches/x/gadgets/y"]) {
+    for (const path of ["/niches/cats/gadgets/does-not-exist", "/niches/cats/gadgets/draft", "/niches/x/gadgets/y"]) {
       const response = await postClick(path, {});
       expect(response.status).toBe(404);
       expect(ErrorResponseSchema.parse(await response.json()).error.code).toBe("GADGET_NOT_FOUND");
@@ -82,7 +82,7 @@ describe("POST /api/v1/niches/:nicheSlug/gadgets/:gadgetSlug/clicks", () => {
     await insertGadget(database.db, niche.id);
 
     for (const body of ["not json", { utmSource: "x".repeat(101) }, { utmSource: "" }, { utmSource: 5 }]) {
-      const response = await postClick("/niches/katzen/gadgets/trinkbrunnen", body);
+      const response = await postClick("/niches/cats/gadgets/water-fountain", body);
       expect(response.status).toBe(400);
       expect(ErrorResponseSchema.parse(await response.json()).error.code).toBe("VALIDATION_FAILED");
     }

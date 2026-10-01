@@ -5,7 +5,7 @@ import BrandMark from "./BrandMark.vue";
 <template>
   <header class="site-header">
     <div class="container site-header-inner">
-      <RouterLink to="/" class="brand" aria-label="Clever Gadgets, zur Startseite">
+      <RouterLink to="/" class="brand" aria-label="Clever Gadgets, go to homepage">
         <BrandMark class="brand-mark" />
         <span class="brand-name">Clever Gadgets</span>
       </RouterLink>

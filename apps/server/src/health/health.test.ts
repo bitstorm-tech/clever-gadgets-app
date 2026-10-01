@@ -28,7 +28,7 @@ describe("GET /api/v1/health", () => {
   });
 
   test("returns 503 when the database is unreachable", async () => {
-    // Port 1 ist nie ein PostgreSQL-Server; die Verbindung scheitert sofort.
+    // Port 1 is never a PostgreSQL server; the connection fails immediately.
     const unreachable = connectDatabase("postgres://nobody:nothing@127.0.0.1:1/none");
     const app = createApp({ db: unreachable.db, logger: silentLogger });
 

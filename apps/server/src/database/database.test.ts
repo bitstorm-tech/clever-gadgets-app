@@ -5,7 +5,7 @@ import { connectDatabase, type DatabaseConnection } from "./database";
 
 let database: TestDatabase;
 
-/** postgres.js-Abfragen sind faule Thenables; ein async-Wrapper macht daraus ein echtes Promise, das wirklich läuft. */
+/** postgres.js queries are lazy thenables; an async wrapper turns them into a real promise that actually runs. */
 const selectOne = async (connection: DatabaseConnection) => connection.sql`select 1`;
 
 beforeAll(async () => {
@@ -17,7 +17,7 @@ afterAll(async () => {
 });
 
 describe("connectDatabase().close", () => {
-  // Regression: Ein offener Pool hält den Prozess am Leben, z. B. endet `bun run migrate` sonst nie.
+  // Regression: an open pool keeps the process alive, e.g. otherwise `bun run migrate` never exits.
   test("ends the pool when only the raw client was used", async () => {
     const connection = connectDatabase(database.url);
     await connection.sql`select 1`;

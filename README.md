@@ -1,133 +1,137 @@
 # Clever Gadgets
 
-Eine Web-App mit ausgewählten Gadgets für den Alltag. Besucher finden hier Gadgets, jedes mit einer eigenen Seite, und kommen von dort auf die Seite des Anbieters. Für Käufe dort erhalten wir eine Provision (Affiliate-Marketing).
+A web app with hand-picked everyday gadgets. Visitors find gadgets, each with its own page, and go from there to the seller's site. We earn a commission on purchases made there (affiliate marketing).
 
-Die Seite deckt mehrere **Nischen** ab (Katzen, Hunde, Garten, Wohnen, Küche, …). Pro Nische gibt es mehrere Gadgets, aber jede Seite handelt von genau einem Gadget. Jede Nische bekommt eigene Instagram- und TikTok-Accounts, die Besucher mit Videos auf die jeweilige Seite bringen. Gestartet wird mit der Nische **Katzen**.
+The site covers several **niches** (cats, dogs, garden, home, kitchen, …). Each niche has several gadgets, but every page is about exactly one gadget. Each niche gets its own Instagram and TikTok accounts that bring visitors to the matching pages with videos. We start with the **cats** niche.
 
-## Voraussetzungen
+## Language
 
-- [Bun](https://bun.sh) 1.4.2 (festgelegt in `package.json`)
-- Docker mit dem Compose-Plugin (`docker compose`)
+The target region is the USA and the audience is English-speaking. Everything visitors see is in US English. All code, comments, identifiers, test data, and documentation are in English too.
 
-## Loslegen
+## Requirements
+
+- [Bun](https://bun.sh) 1.4.2 (pinned in `package.json`)
+- Docker with the Compose plugin (`docker compose`)
+
+## Getting started
 
 ```sh
 bun install
 bun run dev
 ```
 
-`bun run dev` startet PostgreSQL (docker compose, Host-Port **5434**), wendet die Migrationen an, lädt die Beispieldaten und startet den Server auf <http://localhost:3100> und den Web-Client auf <http://localhost:5174>. Der Client leitet `/api` an den Server weiter (Ziel änderbar mit `CLEVER_GADGETS_API_URL`). Mit `Ctrl+C` wird auch der Datenbank-Container gestoppt.
+`bun run dev` starts PostgreSQL (docker compose, host port **5434**), applies the migrations, loads the sample data, and starts the server at <http://localhost:3100> and the web client at <http://localhost:5174>. The client forwards `/api` to the server (the target can be changed with `CLEVER_GADGETS_API_URL`). `Ctrl+C` also stops the database container.
 
-Health-Check: <http://localhost:3100/api/v1/health>
+Health check: <http://localhost:3100/api/v1/health>
 
-Die Ports unterscheiden sich bewusst von Finifeed (3000, 5173, 5433), damit beide Projekte gleichzeitig laufen können.
+The ports deliberately differ from Finifeed (3000, 5173, 5433) so that both projects can run at the same time.
 
-## Befehle
+## Commands
 
-| Befehl | Wirkung |
+| Command | What it does |
 |---|---|
-| `bun run dev` | Datenbank + Beispieldaten + Server (Watch-Modus) + Web-Client |
-| `bun run db:up` / `bun run db:down` | Lokale Datenbank starten / stoppen |
-| `bun run migrate` | Ausstehende Migrationen anwenden, ohne den Server zu starten |
-| `bun run seed` | Migrationen anwenden und die Beispieldaten laden (bricht in Produktion ab) |
-| `bun run test` | Alle Tests (Integrationstests starten ihr eigenes PostgreSQL über Testcontainers, Docker muss laufen) |
-| `bun run typecheck` | Typen aller Pakete prüfen |
-| `bun run build` | Produktions-Build des Web-Clients |
-| `bun run ci` | Typecheck + Tests + Build, wie in der CI |
+| `bun run dev` | Database + sample data + server (watch mode) + web client |
+| `bun run db:up` / `bun run db:down` | Start / stop the local database |
+| `bun run migrate` | Apply pending migrations without starting the server |
+| `bun run seed` | Apply migrations and load the sample data (aborts in production) |
+| `bun run test` | All tests (integration tests start their own PostgreSQL via Testcontainers, so Docker must be running) |
+| `bun run typecheck` | Type-check all packages |
+| `bun run build` | Production build of the web client |
+| `bun run ci` | Typecheck + tests + build, as in CI |
 
-## Seiten
+## Pages
 
-| Adresse | Inhalt |
+| URL | Content |
 |---|---|
-| `/` | Startseite mit allen Nischen |
-| `/katzen` | Eine Nische mit ihren Gadgets |
-| `/katzen/trinkbrunnen` | Die Seite eines Gadgets, mit dem Button zum Anbieter |
-| `/impressum`, `/datenschutz` | Platzhalter, die Texte fehlen noch |
+| `/` | Home page with all niches |
+| `/cats` | One niche with its gadgets |
+| `/cats/water-fountain` | The page of one gadget, with the button to the seller |
+| `/legal-notice`, `/privacy-policy` | Placeholders, the texts are still missing |
 
-Die Adressen entstehen aus den `slug`-Feldern von Nische und Gadget.
+The URLs are built from the `slug` fields of the niche and the gadget.
 
 ## API
 
-Alles unter `/api/v1`. Antworten und Fehler sind in `packages/shared` als Zod-Schemas beschrieben.
+Everything lives under `/api/v1`. Responses and errors are described as Zod schemas in `packages/shared`.
 
-| Aufruf | Antwort |
+| Request | Response |
 |---|---|
-| `GET /health` | Zustand von Server und Datenbank |
-| `GET /niches` | Veröffentlichte Nischen mit Anzahl ihrer Gadgets |
-| `GET /niches/:nicheSlug` | Eine Nische mit ihren veröffentlichten Gadgets |
-| `GET /niches/:nicheSlug/gadgets/:gadgetSlug` | Ein Gadget mit Affiliate-Link |
-| `POST /niches/:nicheSlug/gadgets/:gadgetSlug/clicks` | Zählt einen Klick auf den Affiliate-Link (`204`) |
+| `GET /health` | State of the server and the database |
+| `GET /niches` | Published niches with the number of their gadgets |
+| `GET /niches/:nicheSlug` | One niche with its published gadgets |
+| `GET /niches/:nicheSlug/gadgets/:gadgetSlug` | One gadget with its affiliate link |
+| `POST /niches/:nicheSlug/gadgets/:gadgetSlug/clicks` | Counts a click on the affiliate link (`204`) |
 
-Sichtbar ist nur, was veröffentlicht ist (`is_published`), und ein Gadget nur, wenn auch seine Nische veröffentlicht ist.
+Only published content is visible (`is_published`), and a gadget only if its niche is published too.
 
-## Affiliate-Klicks
+## Affiliate clicks
 
-- Der Button auf der Gadget-Seite ist ein **direkter Link** zum Anbieter (`rel="sponsored nofollow noopener"`, neuer Tab), kein Umweg über unseren Server. Er funktioniert auch, wenn die Zählung ausfällt.
-- Beim Klick meldet die Seite den Klick an `POST …/clicks`. Gespeichert werden nur das Gadget, der Zeitpunkt und `utm_source`, `utm_medium`, `utm_campaign` aus der Einstiegsadresse. Keine IP-Adresse, kein User-Agent, keine Cookies, nichts im Local Storage. Die UTM-Werte merkt sich die Seite nur im Arbeitsspeicher.
-- Zum Auswerten, woher Klicks kommen, Links in Instagram und TikTok mit UTM-Parametern bauen:
-  `https://<domain>/katzen/trinkbrunnen?utm_source=instagram&utm_medium=social&utm_campaign=katzen-reel-1`
-- Auswertung:
+- The button on the gadget page is a **direct link** to the seller (`rel="sponsored nofollow noopener"`, new tab), not a detour through our server. It keeps working even if click counting fails.
+- On click, the page reports the click to `POST …/clicks`. Only the gadget, the time, and `utm_source`, `utm_medium`, `utm_campaign` from the entry URL are stored. No IP address, no user agent, no cookies, nothing in local storage. The page keeps the UTM values in memory only.
+- To see where clicks come from, build links in Instagram and TikTok with UTM parameters:
+  `https://<domain>/cats/water-fountain?utm_source=instagram&utm_medium=social&utm_campaign=cats-reel-1`
+- Reporting:
 
 ```sql
-select g.slug, c.utm_source, c.utm_campaign, count(*) as klicks
+select g.slug, c.utm_source, c.utm_campaign, count(*) as clicks
 from gadget_clicks c
 join gadgets g on g.id = c.gadget_id
 group by 1, 2, 3
-order by klicks desc;
+order by clicks desc;
 ```
 
-## Inhalte pflegen
+## Managing content
 
-Es gibt noch keine Admin-Oberfläche. Nischen und Gadgets liegen in den Tabellen `niches` und `gadgets`.
+There is no admin interface yet. Niches and gadgets live in the tables `niches` and `gadgets`.
 
-- **Beispieldaten** stehen in `apps/server/src/seed/sample-catalog.ts`. Das sind Platzhalter (kein echtes Produkt, Links zeigen auf `example.com`). Sie werden nur in der Entwicklung geladen, nie in Produktion.
-- **Ein Gadget per SQL anlegen:**
+- **Sample data** lives in `apps/server/src/seed/sample-catalog.ts`. It is placeholder content (no real product, links point to `example.com`). It is only loaded in development, never in production.
+- **Add a gadget with SQL:**
 
 ```sql
 insert into gadgets (niche_id, slug, name, tagline, description, highlights, image_url, merchant_name, affiliate_url, is_published)
-select id, 'kratzbaum', 'Kratzbaum XL', 'Platz zum Klettern.',
-       E'Erster Absatz.\n\nZweiter Absatz.',
-       '["Stabil", "Hoch"]', '/images/gadgets/kratzbaum.jpg',
-       'Mein Anbieter', 'https://example.com/mein-affiliate-link', true
-from niches where slug = 'katzen';
+select id, 'scratching-post', 'Scratching Post XL', 'Room to climb.',
+       E'First paragraph.\n\nSecond paragraph.',
+       '["Sturdy", "Tall"]', '/images/gadgets/scratching-post.jpg',
+       'My Merchant', 'https://example.com/my-affiliate-link', true
+from niches where slug = 'cats';
 ```
 
-- **Bilder:** `image_url` ist eine absolute `https://`-Adresse oder ein Pfad wie `/images/gadgets/kratzbaum.jpg` (Datei dann in `apps/web/public/images/gadgets/`). Ohne Bild zeigt die Seite eine Kachel mit dem Emoji der Nische.
-- **Beschreibung:** reiner Text, Absätze durch eine Leerzeile getrennt.
-- **Neue Nische:** Zeile in `niches` mit `slug`, `name`, `tagline`, `description`, `emoji`, `accent_color` (Hex, z. B. `#b8a1ff`) und `is_published = true`. Die Akzentfarbe prägt die Seiten der Nische, der gelbe Knopf bleibt überall gleich.
+- **Images:** `image_url` is an absolute `https://` URL or a path like `/images/gadgets/scratching-post.jpg` (the file then goes in `apps/web/public/images/gadgets/`). Without an image, the page shows a tile with the niche's emoji.
+- **Description:** plain text, paragraphs separated by a blank line.
+- **New niche:** a row in `niches` with `slug`, `name`, `tagline`, `description`, `emoji`, `accent_color` (hex, e.g. `#b8a1ff`) and `is_published = true`. The accent color shapes the pages of the niche; the yellow button stays the same everywhere.
 
-## Konfiguration
+## Configuration
 
-Der Server liest Umgebungsvariablen (siehe [`.env.example`](.env.example)). In der Entwicklung ist keine Konfiguration nötig. Zum Überschreiben `apps/server/.env` anlegen. In Produktion sind `APP_ENV=production` und `DATABASE_URL` Pflicht.
+The server reads environment variables (see [`.env.example`](.env.example)). No configuration is needed in development. To override values, create `apps/server/.env`. In production, `APP_ENV=production` and `DATABASE_URL` are required.
 
 ## Tests
 
-`bun run test` startet PostgreSQL über Testcontainers, Docker muss laufen. Ohne Docker lässt sich ein schon laufender PostgreSQL-Server nutzen:
+`bun run test` starts PostgreSQL via Testcontainers, so Docker must be running. Without Docker, an already running PostgreSQL server can be used:
 
 ```sh
-TEST_POSTGRES_URL=postgres://user:passwort@localhost:5432/postgres bun run test
+TEST_POSTGRES_URL=postgres://user:password@localhost:5432/postgres bun run test
 ```
 
-Die Tests legen dort nur Datenbanken `test_<uuid>` an und löschen sie wieder. Andere Datenbanken bleiben unberührt.
+The tests only create databases named `test_<uuid>` there and drop them again. Other databases are left untouched.
 
-## Aufbau
+## Structure
 
 ```text
-apps/server/       Bun + Hono Backend
-  migrations/      SQL-Migrationen (NNNN_beschreibung.sql), nach dem Anwenden nie ändern
-  src/             Feature-Ordner (catalog/, clicks/, seed/, health/, database/, config/, http/, …)
-apps/web/          Vue 3 + Vite Frontend
-packages/shared/   API-Vertrag: Typen, Zod-Schemas, Fehlercodes
+apps/server/       Bun + Hono backend
+  migrations/      SQL migrations (NNNN_description.sql), never change them after applying
+  src/             Feature folders (catalog/, clicks/, seed/, health/, database/, config/, http/, …)
+apps/web/          Vue 3 + Vite frontend
+packages/shared/   API contract: types, Zod schemas, error codes
 ```
 
-## Migrationen
+## Migrations
 
-Neue Datei `apps/server/migrations/NNNN_beschreibung.sql` mit der nächsten Nummer anlegen. Jede Datei läuft in einer eigenen Transaktion. Der Runner speichert eine Prüfsumme und startet nicht, wenn eine bereits angewendete Migration geändert wurde. Migrationen laufen beim Serverstart automatisch.
+Create a new file `apps/server/migrations/NNNN_description.sql` with the next number. Each file runs in its own transaction. The runner stores a checksum and refuses to start if an already applied migration was changed. Migrations run automatically on server start.
 
-## Noch nicht enthalten
+## Not included yet
 
-- Admin-Oberfläche zum Pflegen von Nischen und Gadgets
-- Texte für Impressum und Datenschutz (vor dem Livegang nötig)
-- Link-Vorschau (Open Graph) pro Gadget: Die Seite ist eine reine Browser-App, daher zeigen geteilte Links überall dieselbe Vorschau
-- Auslieferung in Produktion: Der Server liefert das gebaute Frontend noch nicht aus, ein Deployment gibt es nicht
-- Schutz des Klick-Endpunkts gegen Missbrauch (z. B. Rate-Limit)
+- Admin interface for managing niches and gadgets
+- Texts for the legal notice and the privacy policy (required before going live)
+- Link previews (Open Graph) per gadget: the site is a pure browser app, so shared links show the same preview everywhere
+- Production delivery: the server does not serve the built frontend yet, and there is no deployment
+- Protection of the click endpoint against abuse (e.g. rate limiting)

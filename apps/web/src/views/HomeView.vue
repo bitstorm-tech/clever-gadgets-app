@@ -14,14 +14,14 @@ usePageMeta();
 <template>
   <HomeIntro />
   <section class="niches container" aria-labelledby="niches-title">
-    <h2 id="niches-title" class="niches-title">Wofür suchst du Gadgets?</h2>
+    <h2 id="niches-title" class="niches-title">What do you need gadgets for?</h2>
     <ResourceBoundary :status="status" inline @retry="reload">
       <ul v-if="niches && niches.length > 0" class="niche-grid">
         <li v-for="niche in niches" :key="niche.slug">
           <NicheTile :niche="niche" />
         </li>
       </ul>
-      <p v-else class="niches-empty">Hier ist noch nichts. Schau bald wieder vorbei.</p>
+      <p v-else class="niches-empty">Nothing here yet. Check back soon.</p>
     </ResourceBoundary>
   </section>
 </template>
@@ -32,14 +32,14 @@ usePageMeta();
   font-size: 1.5rem;
 }
 
-/* auto-fit: Eine einzelne Nische füllt die ganze Breite, mehrere teilen sie sich. */
+/* auto-fit: a single niche fills the whole width, several niches share it. */
 .niche-grid {
   display: grid;
   gap: 1.25rem;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
 }
 
-/* Die Kachel passt ihr Layout an die Breite ihres Platzes an (siehe NicheTile). */
+/* The tile adapts its layout to the width of its slot (see NicheTile). */
 .niche-grid > li {
   container: niche-slot / inline-size;
 }

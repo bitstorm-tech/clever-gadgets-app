@@ -7,7 +7,7 @@ describe("HttpUrlSchema", () => {
     expect(HttpUrlSchema.safeParse("http://example.com").success).toBe(true);
   });
 
-  // Der Wert landet im href eines Links: andere Protokolle wären ein XSS-Einfallstor.
+  // The value ends up in the href of a link: other protocols would be an XSS entry point.
   test("rejects other protocols", () => {
     for (const url of ["javascript:alert(1)", "data:text/html,hi", "ftp://example.com/file", "not a url"]) {
       expect(HttpUrlSchema.safeParse(url).success).toBe(false);
@@ -30,13 +30,13 @@ describe("ImageUrlSchema", () => {
 
 describe("SlugSchema", () => {
   test("accepts lowercase words joined by single hyphens", () => {
-    for (const slug of ["katzen", "trinkbrunnen-mit-filter", "gadget-2"]) {
+    for (const slug of ["cats", "water-fountain-with-filter", "gadget-2"]) {
       expect(SlugSchema.safeParse(slug).success).toBe(true);
     }
   });
 
   test("rejects everything else", () => {
-    for (const slug of ["", "Katzen", "a b", "-a", "a-", "a--b", "ä"]) {
+    for (const slug of ["", "Cats", "a b", "-a", "a-", "a--b", "café"]) {
       expect(SlugSchema.safeParse(slug).success).toBe(false);
     }
   });

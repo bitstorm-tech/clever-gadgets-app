@@ -1,9 +1,9 @@
--- Katalog: Nischen (z. B. Katzen) und ihre Gadgets. Jedes Gadget hat eine eigene Seite.
--- UUID-Primärschlüssel nutzen gen_random_uuid(), eingebaut ab PostgreSQL 13 (keine Extension nötig).
+-- Catalog: niches (e.g. cats) and their gadgets. Every gadget has its own page.
+-- UUID primary keys use gen_random_uuid(), built in since PostgreSQL 13 (no extension needed).
 
 create table niches (
   id uuid primary key default gen_random_uuid(),
-  -- Teil der Seitenadresse, z. B. /katzen
+  -- Part of the page URL, e.g. /cats
   slug text not null unique check (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
   name text not null,
   tagline text not null,
@@ -11,7 +11,7 @@ create table niches (
   emoji text not null,
   accent_color text not null check (accent_color ~ '^#[0-9a-fA-F]{6}$'),
   sort_order integer not null default 0,
-  -- Nur veröffentlichte Nischen sind über die API sichtbar.
+  -- Only published niches are visible through the API.
   is_published boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -20,24 +20,24 @@ create table niches (
 create table gadgets (
   id uuid primary key default gen_random_uuid(),
   niche_id uuid not null references niches (id),
-  -- Teil der Seitenadresse, z. B. /katzen/trinkbrunnen. Eindeutig innerhalb der Nische.
+  -- Part of the page URL, e.g. /cats/water-fountain. Unique within the niche.
   slug text not null check (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
   name text not null,
   tagline text not null,
-  -- Fließtext; Absätze sind durch eine Leerzeile getrennt.
+  -- Running text; paragraphs are separated by a blank line.
   description text not null,
-  -- Kurze Stichpunkte als JSON-Array von Texten.
+  -- Short bullet points as a JSON array of strings.
   highlights jsonb not null default '[]' check (jsonb_typeof(highlights) = 'array'),
-  -- Absolute http(s)-URL oder Pfad auf dieser Seite (z. B. /images/gadgets/foo.jpg).
+  -- Absolute http(s) URL or a path on this site (e.g. /images/gadgets/foo.jpg).
   image_url text check (image_url ~ '^(https?://|/[^/])'),
   merchant_name text not null,
-  -- Der Affiliate-Link zur Seite des Anbieters.
+  -- The affiliate link to the merchant's page.
   affiliate_url text not null check (affiliate_url ~ '^https?://'),
   sort_order integer not null default 0,
-  -- Nur veröffentlichte Gadgets in veröffentlichten Nischen sind über die API sichtbar.
+  -- Only published gadgets in published niches are visible through the API.
   is_published boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  -- Dieser Index deckt auch Abfragen nach niche_id ab.
+  -- This index also covers queries by niche_id.
   unique (niche_id, slug)
 );

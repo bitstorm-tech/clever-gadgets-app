@@ -3,8 +3,8 @@ import type { Db } from "../database/database";
 import type { SeedNiche } from "./sample-catalog";
 
 /**
- * Legt Nischen und Gadgets an oder aktualisiert sie anhand ihres Slugs. Mehrfaches Ausführen ist unbedenklich.
- * Alles wird veröffentlicht; die Reihenfolge im Array bestimmt die Anzeigereihenfolge.
+ * Creates or updates niches and gadgets by their slug. Running it repeatedly is harmless.
+ * Everything is published; the order in the array determines the display order.
  */
 export async function seedCatalog(db: Db, catalog: SeedNiche[]): Promise<void> {
   await db.transaction().execute(async (tx) => {
@@ -18,7 +18,7 @@ export async function seedCatalog(db: Db, catalog: SeedNiche[]): Promise<void> {
           description: niche.description,
           emoji: niche.emoji,
           accent_color: niche.accentColor,
-          // Abstände von 10, damit sich von Hand eingetragene Einträge dazwischen einordnen lassen.
+          // Steps of 10, so entries added by hand can be slotted in between.
           sort_order: nicheIndex * 10,
           is_published: true,
         })
@@ -46,7 +46,7 @@ export async function seedCatalog(db: Db, catalog: SeedNiche[]): Promise<void> {
             name: gadget.name,
             tagline: gadget.tagline,
             description: gadget.description,
-            // postgres.js serialisiert Arrays für jsonb-Parameter als JSON.
+            // postgres.js serializes arrays for jsonb parameters as JSON.
             highlights: gadget.highlights,
             image_url: gadget.imageUrl,
             merchant_name: gadget.merchantName,

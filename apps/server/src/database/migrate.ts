@@ -7,7 +7,7 @@ export const MIGRATIONS_DIR = join(import.meta.dir, "../../migrations");
 
 const MIGRATION_FILE = /^\d{4}_[a-z0-9_]+\.sql$/;
 
-/** Beliebige Konstante für pg_advisory_xact_lock, damit parallele Runner Migrationen nacheinander anwenden. */
+/** Arbitrary constant for pg_advisory_xact_lock, so parallel runners apply migrations one after another. */
 const MIGRATION_LOCK_KEY = 4_842_001;
 
 interface AppliedMigration {
@@ -16,9 +16,9 @@ interface AppliedMigration {
 }
 
 /**
- * Wendet ausstehende `NNNN_beschreibung.sql`-Dateien in Dateinamen-Reihenfolge an, jede in einer eigenen Transaktion.
- * Hat sich eine bereits angewendete Datei geändert, bricht der Lauf ab: Migrationen sind unveränderlich.
- * Gibt die in diesem Lauf angewendeten Dateinamen zurück.
+ * Applies pending `NNNN_description.sql` files in filename order, each in its own transaction.
+ * If an already applied file has changed, the run aborts: migrations are immutable.
+ * Returns the filenames applied in this run.
  */
 export async function migrate(sql: postgres.Sql, logger: Logger, dir = MIGRATIONS_DIR): Promise<string[]> {
   const files = await listMigrationFiles(dir);

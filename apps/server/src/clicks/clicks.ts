@@ -3,7 +3,7 @@ import { findPublishedGadgetId } from "../catalog/catalog";
 import type { Db } from "../database/database";
 import { AppError } from "../errors/app-error";
 
-/** Speichert einen Klick auf den Affiliate-Link eines veröffentlichten Gadgets. Es werden keine Personendaten gespeichert. */
+/** Stores a click on the affiliate link of a published gadget. No personal data is stored. */
 export async function recordGadgetClick(
   db: Db,
   nicheSlug: string,

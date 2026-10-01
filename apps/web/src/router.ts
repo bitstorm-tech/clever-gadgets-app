@@ -2,30 +2,30 @@ import { createRouter, createWebHistory } from "vue-router";
 
 declare module "vue-router" {
   interface RouteMeta {
-    /** Überschrift und Seitentitel der Textseiten (Impressum, Datenschutz). */
+    /** Heading and page title of the text pages (legal notice, privacy policy). */
     title?: string;
   }
 }
 
 export const router = createRouter({
   history: createWebHistory(),
-  // Neue Seiten starten oben; "Zurück" stellt die alte Position wieder her.
+  // New pages start at the top; "Back" restores the previous position.
   scrollBehavior: (_to, _from, savedPosition) => savedPosition ?? { top: 0 },
   routes: [
     { path: "/", name: "home", component: () => import("./views/HomeView.vue") },
     {
-      path: "/impressum",
-      name: "imprint",
+      path: "/legal-notice",
+      name: "legal-notice",
       component: () => import("./views/LegalView.vue"),
-      meta: { title: "Impressum" },
+      meta: { title: "Legal Notice" },
     },
     {
-      path: "/datenschutz",
-      name: "privacy",
+      path: "/privacy-policy",
+      name: "privacy-policy",
       component: () => import("./views/LegalView.vue"),
-      meta: { title: "Datenschutz" },
+      meta: { title: "Privacy Policy" },
     },
-    // Statische Pfade stehen vor den dynamischen: /impressum ist keine Nische.
+    // Static paths come before dynamic ones: /legal-notice is not a niche.
     { path: "/:nicheSlug", name: "niche", component: () => import("./views/NicheView.vue"), props: true },
     {
       path: "/:nicheSlug/:gadgetSlug",

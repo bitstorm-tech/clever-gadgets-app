@@ -2,7 +2,7 @@ export interface SeedGadget {
   slug: string;
   name: string;
   tagline: string;
-  /** Absätze sind durch eine Leerzeile getrennt. */
+  /** Paragraphs are separated by a blank line. */
   description: string;
   highlights: string[];
   imageUrl: string | null;
@@ -21,65 +21,65 @@ export interface SeedNiche {
 }
 
 /**
- * Beispieldaten für die Entwicklung (`bun run seed`, läuft auch bei `bun run dev`).
- * Texte und Links sind Platzhalter: Es gibt keine echten Produkte, die Affiliate-Links zeigen auf example.com.
- * In Produktion wird nichts davon geladen.
+ * Sample data for development (`bun run seed`, also runs with `bun run dev`).
+ * Texts and links are placeholders: there are no real products, and the affiliate links point to example.com.
+ * None of this is loaded in production.
  */
 export const SAMPLE_CATALOG: SeedNiche[] = [
   {
-    slug: "katzen",
-    name: "Katzen",
-    tagline: "Gadgets für Samtpfoten und ihre Menschen",
+    slug: "cats",
+    name: "Cats",
+    tagline: "Gadgets for cats and their humans",
     description:
-      "Spielzeug, das fordert. Technik, die Arbeit abnimmt. Hier findest du ausgewählte Gadgets, die den Alltag mit Katze leichter und schöner machen.",
+      "Toys that challenge. Tech that takes work off your hands. Here you'll find hand-picked gadgets that make everyday life with a cat easier and nicer.",
     emoji: "🐱",
     accentColor: "#b8a1ff",
     gadgets: [
       {
-        slug: "trinkbrunnen",
-        name: "Katzen-Trinkbrunnen",
-        tagline: "Fließendes Wasser statt stehendem Napf.",
+        slug: "water-fountain",
+        name: "Cat Water Fountain",
+        tagline: "Flowing water instead of a still bowl.",
         description:
-          "Viele Katzen trinken zu wenig. Ein Trinkbrunnen hält das Wasser in Bewegung, und das macht es für viele Tiere interessanter als ein stiller Napf.\n\nEin Filter fängt Haare und Schwebteilchen ab. Die Pumpe läuft leise, damit auch Katzen mit feinen Ohren entspannt bleiben.",
+          "Many cats don't drink enough. A water fountain keeps the water moving, and that makes it more interesting to many animals than a still bowl.\n\nA filter catches hair and floating particles. The pump runs quietly, so even cats with sensitive ears stay relaxed.",
         highlights: [
-          "Fließendes Wasser lädt zum Trinken ein",
-          "Filter hält das Wasser länger frisch",
-          "Läuft leise im Hintergrund",
-          "Zum Reinigen leicht auseinanderzunehmen",
+          "Flowing water invites cats to drink",
+          "Filter keeps the water fresh longer",
+          "Runs quietly in the background",
+          "Easy to take apart for cleaning",
         ],
         imageUrl: null,
-        merchantName: "Beispiel-Shop",
-        affiliateUrl: "https://example.com/katzen-trinkbrunnen",
+        merchantName: "Example Shop",
+        affiliateUrl: "https://example.com/cat-water-fountain",
       },
       {
-        slug: "laserspielzeug",
-        name: "Automatisches Laserspielzeug",
-        tagline: "Beschäftigt deine Katze, auch wenn du arbeitest.",
+        slug: "laser-toy",
+        name: "Automatic Laser Toy",
+        tagline: "Keeps your cat busy, even while you work.",
         description:
-          "Ein kleiner Lichtpunkt huscht in zufälligen Mustern über den Boden. Das weckt den Jagdinstinkt und bringt Bewegung in den Tag.\n\nNach einer festen Zeit schaltet sich das Gerät von selbst ab. So bleibt das Spiel ein Spiel und wird nicht zur Dauerjagd.",
+          "A small dot of light darts across the floor in random patterns. It awakens the hunting instinct and brings some movement into the day.\n\nAfter a set time, the device switches itself off. That way play stays play and never turns into a nonstop chase.",
         highlights: [
-          "Zufällige Bewegungsmuster",
-          "Schaltet sich nach der Spielzeit selbst ab",
-          "Einfach aufstellen und einschalten",
+          "Random movement patterns",
+          "Switches itself off after playtime",
+          "Just set it up and switch it on",
         ],
         imageUrl: null,
-        merchantName: "Beispiel-Shop",
-        affiliateUrl: "https://example.com/katzen-laserspielzeug",
+        merchantName: "Example Shop",
+        affiliateUrl: "https://example.com/cat-laser-toy",
       },
       {
-        slug: "selbstreinigende-katzentoilette",
-        name: "Selbstreinigende Katzentoilette",
-        tagline: "Weniger Schaufeln, mehr Kuscheln.",
+        slug: "self-cleaning-litter-box",
+        name: "Self-Cleaning Litter Box",
+        tagline: "Less scooping, more cuddling.",
         description:
-          "Nach jedem Besuch sortiert die Toilette Klumpen automatisch in einen geschlossenen Behälter. Den leerst du nur noch ab und zu.\n\nDas spart Zeit und hält die Wohnung angenehmer, vor allem in kleinen Räumen.",
+          "After every visit, the litter box sorts clumps into a closed container automatically. You only have to empty it once in a while.\n\nThat saves time and keeps your home more pleasant, especially in small spaces.",
         highlights: [
-          "Klumpen werden automatisch entfernt",
-          "Geschlossener Behälter bindet Gerüche",
-          "Weniger Handarbeit im Alltag",
+          "Clumps are removed automatically",
+          "Sealed container traps odors",
+          "Less manual work day to day",
         ],
         imageUrl: null,
-        merchantName: "Beispiel-Shop",
-        affiliateUrl: "https://example.com/katzen-toilette",
+        merchantName: "Example Shop",
+        affiliateUrl: "https://example.com/cat-litter-box",
       },
     ],
   },

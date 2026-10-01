@@ -3,7 +3,7 @@ import type { Context } from "hono";
 import { z } from "zod";
 import { AppError } from "../errors/app-error";
 
-/** Liest und prüft einen JSON-Body; ungültiges JSON oder Schema-Verstöße werden zu VALIDATION_FAILED. */
+/** Reads and validates a JSON body; invalid JSON or schema violations become VALIDATION_FAILED. */
 export async function parseJsonBody<T extends z.ZodType>(c: Context, schema: T): Promise<z.infer<T>> {
   let body: unknown;
   try {

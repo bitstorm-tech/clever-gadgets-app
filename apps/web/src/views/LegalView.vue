@@ -12,7 +12,7 @@ usePageMeta(() => ({ title: title.value }));
 <template>
   <article class="legal container">
     <h1 class="legal-title">{{ title }}</h1>
-    <p class="legal-text">Dieser Text fehlt noch. Er muss vor dem Livegang vom Betreiber der Seite ergänzt werden.</p>
+    <p class="legal-text">This text is still missing. The site operator has to add it before launch.</p>
   </article>
 </template>
 

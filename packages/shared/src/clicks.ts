@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-/** Längster gespeicherter UTM-Wert. Längere Werte sind kein sinnvoller Kampagnenname. */
+/** Longest stored UTM value. Longer values are not a sensible campaign name. */
 export const MAX_UTM_LENGTH = 100;
 
 const UtmValueSchema = z.string().trim().min(1).max(MAX_UTM_LENGTH).optional();
 
 /**
- * `POST /api/v1/niches/:nicheSlug/gadgets/:gadgetSlug/clicks`: meldet einen Klick auf den Affiliate-Link.
- * Es werden bewusst keine personenbezogenen Daten übertragen, nur die Herkunft aus den UTM-Parametern.
+ * `POST /api/v1/niches/:nicheSlug/gadgets/:gadgetSlug/clicks`: reports a click on the affiliate link.
+ * No personal data is sent on purpose, only the origin from the UTM parameters.
  */
 export const RecordClickRequestSchema = z.object({
   utmSource: UtmValueSchema,

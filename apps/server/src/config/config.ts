@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-/** Passt zur Datenbank aus docker-compose.yml. Wird in Produktion nie verwendet. */
+/** Matches the database from docker-compose.yml. Never used in production. */
 const LOCAL_DATABASE_URL = "postgres://clevergadgets:clevergadgets@localhost:5434/clevergadgets";
 
 const EnvSchema = z.object({
@@ -18,11 +18,11 @@ export interface Config {
   port: number;
   databaseUrl: string;
   logLevel: z.infer<typeof EnvSchema>["LOG_LEVEL"];
-  /** `json` oder lesbarer `text` (pino-pretty). Standard: `text` in Entwicklung, sonst `json`. */
+  /** `json` or human-readable `text` (pino-pretty). Default: `text` in development, `json` otherwise. */
   logFormat: "json" | "text";
 }
 
-/** Liest und prüft die Konfiguration. Wirft mit allen Problemen, wenn die Umgebung ungültig ist. */
+/** Reads and validates the configuration. Throws with all problems if the environment is invalid. */
 export function loadConfig(env: Record<string, string | undefined> = process.env): Config {
   const parsed = EnvSchema.safeParse(env);
   if (!parsed.success) {

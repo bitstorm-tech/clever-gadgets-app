@@ -11,7 +11,7 @@ const props = defineProps<{ gadget: Gadget }>();
 
 const nicheLocation = computed(() => ({ name: "niche", params: { nicheSlug: props.gadget.niche.slug } }));
 const crumbs = computed(() => [
-  { label: "Start", to: "/" },
+  { label: "Home", to: "/" },
   { label: props.gadget.niche.name, to: nicheLocation.value },
   { label: props.gadget.name },
 ]);
@@ -49,21 +49,21 @@ function onAffiliateClick() {
 
     <div class="body">
       <section v-if="gadget.highlights.length > 0" aria-labelledby="highlights-title">
-        <h2 id="highlights-title" class="section-title">Darum ist es clever</h2>
+        <h2 id="highlights-title" class="section-title">Why it's clever</h2>
         <ul class="highlights">
           <li v-for="(highlight, index) in gadget.highlights" :key="index" class="highlight">{{ highlight }}</li>
         </ul>
       </section>
 
       <section v-if="paragraphs.length > 0" aria-labelledby="story-title">
-        <h2 id="story-title" class="section-title">Kurz erklärt</h2>
+        <h2 id="story-title" class="section-title">The short version</h2>
         <p v-for="(paragraph, index) in paragraphs" :key="index" class="story-paragraph">{{ paragraph }}</p>
       </section>
 
       <div class="closing">
         <AffiliateButton :href="gadget.affiliateUrl" :merchant-name="gadget.merchantName" @activate="onAffiliateClick" />
         <AffiliateNotice />
-        <RouterLink :to="nicheLocation" class="back-link">Alle Gadgets für {{ gadget.niche.name }}</RouterLink>
+        <RouterLink :to="nicheLocation" class="back-link">All gadgets for {{ gadget.niche.name }}</RouterLink>
       </div>
     </div>
   </article>
@@ -75,8 +75,8 @@ function onAffiliateClick() {
   gap: 1.5rem;
 }
 
-/* Container: Die Überschrift richtet sich nach der Breite der Textspalte, nicht nach dem Fenster.
-   So passen auch lange deutsche Wörter wie "Selbstreinigende" in die Spalte. */
+/* Container: the heading size follows the width of the text column, not the window.
+   That way even long words like "Self-Cleaning" fit in the column. */
 .hero-text {
   container-type: inline-size;
   display: grid;

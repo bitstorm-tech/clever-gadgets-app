@@ -1,6 +1,6 @@
 import { MAX_UTM_LENGTH, type RecordClickRequest } from "@clever-gadgets/shared";
 
-/** Herkunft des Besuchs aus den UTM-Parametern der Einstiegsadresse, z. B. `?utm_source=instagram`. */
+/** Origin of the visit from the UTM parameters of the entry URL, e.g. `?utm_source=instagram`. */
 let attribution: RecordClickRequest = {};
 
 function readParam(params: URLSearchParams, name: string): string | undefined {
@@ -9,8 +9,8 @@ function readParam(params: URLSearchParams, name: string): string | undefined {
 }
 
 /**
- * Merkt sich die UTM-Parameter einer Adresse, solange die Seite geöffnet ist. Bewusst nur im Arbeitsspeicher,
- * ohne Cookies oder Local Storage. Adressen ohne UTM-Parameter ändern nichts am gemerkten Wert.
+ * Remembers the UTM parameters of a URL for as long as the page stays open. Deliberately kept in memory only,
+ * with no cookies or local storage. URLs without UTM parameters leave the remembered value unchanged.
  */
 export function captureAttribution(search: string): void {
   const params = new URLSearchParams(search);

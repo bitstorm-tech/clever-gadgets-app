@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { RouteLocationRaw } from "vue-router";
 
-/** Der letzte Eintrag ist die aktuelle Seite und hat kein `to`. */
+/** The last item is the current page and has no `to`. */
 defineProps<{ items: { label: string; to?: RouteLocationRaw }[] }>();
 </script>
 
 <template>
-  <nav aria-label="Brotkrumen">
+  <nav aria-label="Breadcrumb">
     <ol class="crumbs">
       <li v-for="(item, index) in items" :key="index" class="crumb">
         <RouterLink v-if="item.to" :to="item.to" class="crumb-link">{{ item.label }}</RouterLink>
@@ -26,7 +26,7 @@ defineProps<{ items: { label: string; to?: RouteLocationRaw }[] }>();
   font-weight: 600;
 }
 
-/* Der Schrägstrich ist reine Dekoration; die leere Alternative blendet ihn für Screenreader aus. */
+/* The slash is purely decorative; the empty alternative text hides it from screen readers. */
 .crumb + .crumb::before {
   content: "/" / "";
   margin-right: 0.5rem;

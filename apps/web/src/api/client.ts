@@ -1,7 +1,7 @@
 import { type ErrorCode, ErrorResponseSchema } from "@clever-gadgets/shared";
 import type { z } from "zod";
 
-/** Ein fehlgeschlagener API-Aufruf. `message` ist für Entwickler; Besuchern zeigen die Ansichten eigene Texte. */
+/** A failed API call. `message` is meant for developers; the views show their own texts to visitors. */
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -11,13 +11,13 @@ export class ApiError extends Error {
     this.name = "ApiError";
   }
 
-  /** Die angefragte Nische oder das Gadget gibt es nicht (oder nicht mehr). */
+  /** The requested niche or gadget does not exist (or no longer does). */
   get isNotFound(): boolean {
     return this.code === "NOT_FOUND" || this.code === "NICHE_NOT_FOUND" || this.code === "GADGET_NOT_FOUND";
   }
 }
 
-/** Ruft `GET /api/v1{path}` auf und prüft die JSON-Antwort. Wirft ApiError bei jedem Fehler. */
+/** Calls `GET /api/v1{path}` and validates the JSON response. Throws ApiError on every failure. */
 export async function apiRequest<T extends z.ZodType>(path: string, schema: T): Promise<z.infer<T>> {
   let response: Response;
   try {

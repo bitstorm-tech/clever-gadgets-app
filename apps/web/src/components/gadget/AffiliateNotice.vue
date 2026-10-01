@@ -1,7 +1,7 @@
 <template>
   <p class="notice">
-    <strong class="notice-label">Werbung.</strong>
-    Das ist ein Affiliate-Link. Wenn du darüber kaufst, bekommen wir eine kleine Provision. Dein Preis bleibt gleich.
+    <strong class="notice-label">Ad.</strong>
+    This is an affiliate link. If you buy through it, we earn a small commission at no extra cost to you.
   </p>
 </template>
 

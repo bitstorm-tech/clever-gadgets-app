@@ -1,10 +1,10 @@
 import type { RequestIdVariables } from "hono/request-id";
 import type { Logger } from "pino";
 
-/** Hono-Kontext-Typen, die alle Routen teilen. */
+/** Hono context types shared by all routes. */
 export interface AppEnv {
   Variables: RequestIdVariables & {
-    /** Logger mit der ID der aktuellen Anfrage. */
+    /** Logger carrying the ID of the current request. */
     logger: Logger;
   };
 }

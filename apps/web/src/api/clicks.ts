@@ -1,8 +1,8 @@
 import { currentAttribution } from "../attribution";
 
 /**
- * Meldet einen Klick auf den Affiliate-Link. Fehler werden bewusst ignoriert:
- * Der Besucher soll nie auf die Zählung warten, und der Link selbst funktioniert auch ohne sie.
+ * Reports a click on the affiliate link. Errors are ignored on purpose:
+ * the visitor should never wait for the counting, and the link itself works without it.
  */
 export function trackGadgetClick(nicheSlug: string, gadgetSlug: string): void {
   const path = `/niches/${encodeURIComponent(nicheSlug)}/gadgets/${encodeURIComponent(gadgetSlug)}/clicks`;
@@ -10,7 +10,7 @@ export function trackGadgetClick(nicheSlug: string, gadgetSlug: string): void {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(currentAttribution()),
-    // Die Seite wird gleich verlassen; mit keepalive läuft die Anfrage trotzdem zu Ende.
+    // The page is about to be left; keepalive lets the request finish anyway.
     keepalive: true,
   }).catch(() => {});
 }
